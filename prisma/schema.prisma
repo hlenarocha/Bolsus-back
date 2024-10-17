@@ -12,3 +12,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Client {
+  id       Int      @id @default(autoincrement())
+  name  String
+  email String
+  password String
+
+  // Relacionamentos
+  expenses Expense[]
+  incomes Income[]
+}
+
+model Expense {
+    id       Int      @id @default(autoincrement())
+    clientId Int
+    categoryId Int
+    date DateTime
+    title String
+    value Float 
+
+    client Client @relation(fields: [clientId], references: [id])
+    category Category @relation(fields: [categoryId], references: [id])
+}
+
+model Income {
+      id       Int      @id @default(autoincrement())
+      clientId Int
+      categoryId Int
+      date DateTime
+      title String
+      value Float
+
+      client Client @relation(fields: [clientId], references: [id])
+      category Category @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id       Int      @id @default(autoincrement())
+  title String
+  color String
+  isExpense Boolean
+
+  expenses Expense[]
+  incomes Income[]
+}
+
