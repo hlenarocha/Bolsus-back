@@ -1,19 +1,13 @@
 import { Router } from 'express';
-import { PrismaClient } from "@prisma/client";
+import validateSchema from '../middleware/validateSchemaMiddleware';
+import { registerClientSchema } from '../schema/clientSchema';
+import { controlRegistration } from '../controller/clientController';
 
 const clientRouter = Router();
-const prisma = new PrismaClient();
 
-clientRouter.post('/', async (req, res) => {
-  const { name, email, password } = req.body;
-  try { 
-    const client = await prisma.client.create({
-      data: { name, email, password }
-    });
-    res.status(201).send(client);
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
+clientRouter.post("/client/register", 
+  validateSchema(registerClientSchema), 
+  controlRegistration
+);
 
 export default clientRouter;

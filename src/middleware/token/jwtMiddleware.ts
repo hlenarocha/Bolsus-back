@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { readClientByEmail, readClientById } from "../model/clientModel";
+import { readClientByEmail, readClientById } from "../../model/clientModel";
 
 dotenv.config();
 
@@ -9,10 +9,6 @@ const secretKey = process.env.JWT_SECRET || "bolsus";
 
 if (!secretKey) {
   throw new Error("JWT_SECRET is not defined");
-}
-
-interface InfoClient {
-  
 }
 
 export async function generateJWT(
