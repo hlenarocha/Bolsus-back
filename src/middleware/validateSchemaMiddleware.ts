@@ -17,7 +17,7 @@ export default function validateSchema(schema: ObjectSchema) {
       return;
     }
 
-    res.locals.body = body;
+    res.locals.body = body; // boa prática armazenar req no res.locals.body
     next();
   };
 }

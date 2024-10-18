@@ -2,11 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { hash } from "bcrypt";
 import dotenv from 'dotenv';
 import { createClient, readClientByEmail } from '../model/clientModel';
+import bcrypt from "bcrypt";
 
 dotenv.config();
 const bcryptSync = Number(process.env.BCRYPT) || 8;
 
-export async function controlRegistration(
+export async function controlClientRegistration(
   req: Request,
   res: Response,
   next: NextFunction
@@ -34,5 +35,34 @@ export async function controlRegistration(
   } catch(error) {
     res.status(500).send({ error: "Erro ao cadastrar cliente!"});
   }
+}
 
+export async function controlClientLogin(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const client = res.locals.body;
+
+  try {
+    const findClient = await readClientByEmail(client.email);
+
+    if (!findClient) {
+      res.status(400).send({ error: "E-mail não cadastrado!"});
+      return;
+    }
+
+    const isMatch = await bcrypt.compare(client.password, findClient.password);
+
+    if (!isMatch) {
+      res.status(401).send({ error: "Senha incorreta!"});
+      return;
+    }
+    
+    res.status(200).send({ token: res.locals.token }); // mandando token armazenado no locals na response
+     
+  } catch (error) {
+    res.status(500).send(error);
+    return;
+  }
 }

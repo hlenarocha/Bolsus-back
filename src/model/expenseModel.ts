@@ -20,3 +20,11 @@ export async function createExpense({ categoryId, clientId, title, date, value }
     },
   });
 }
+
+export async function deleteExpense(id: number) {
+  await prisma.expense.delete({
+    where: {
+      id,
+    }
+  });
+}

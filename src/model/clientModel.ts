@@ -22,12 +22,10 @@ export async function readClientByEmail(email: string) {
     where: { 
       email
     },
-    select: {
-      id: true // só seleciona id
-    }
+  
   });
 
-  return client?.id;
+  return client;
 }
 
 export async function readClientById(id: number) {
@@ -38,4 +36,12 @@ export async function readClientById(id: number) {
   })
 
   return client;
+}
+
+export async function deleteClientById(id: number) {
+  await prisma.client.delete({
+    where: {
+      id,
+    }
+  })
 }

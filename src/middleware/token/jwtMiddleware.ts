@@ -20,16 +20,22 @@ export async function generateJWT(
   try {
     const client = req.body as { email: string };
 
-    const clientId = readClientByEmail(client.email);
+    const clientId =  await readClientByEmail(client.email);
   
     if (!clientId) {
-      return res.status(404).send({ message: "Client not found "});
+      res.status(404).send({ message: "Client not found "});
+      return;
     }
 
-    jwt.sign(clientId, secretKey, { expiresIn: '168h' })
+    const token = jwt.sign(String(clientId.id), secretKey, { expiresIn: '168h' });
+
+    res.locals.token = token;
+    next();
+
 
   } catch (err) {
-    return res.status(500).send({ message: "Error generating JWT" });
+    res.status(500).send({ message: "Error generating JWT" });
+    return;
   }
 }
 
@@ -42,7 +48,8 @@ export async function verifyJWT(
   const token = authorization?.replace("Bearer", "");
 
   if (!token) {
-    return res.status(401).send({ error: "Token doesn't exist" });
+    res.status(401).send({ error: "Token doesn't exist" });
+    return;
   }
 
   try {
@@ -52,10 +59,15 @@ export async function verifyJWT(
     const verify = await readClientById(decoded.id);
 
     if(!verify) {
-      return res.status(404).send({ message: "Client not found"});
+      res.status(404).send({ message: "Client not found"});
+      return;
     } 
+
+
+
     next();
   } catch (error) {
-    return res.status(401).send({ error: "Unauthorized" });
+    res.status(401).send({ error: "Unauthorized" });
+    return;
   }
 }
