@@ -29,7 +29,7 @@ export async function generateJWT(
 
     const token = jwt.sign(String(clientId.id), secretKey, { expiresIn: '168h' });
 
-    res.locals.token = token;
+    res.locals.cleitinho = token;
     next();
 
 

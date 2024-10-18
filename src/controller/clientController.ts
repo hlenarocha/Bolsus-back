@@ -12,7 +12,7 @@ export async function controlClientRegistration(
   res: Response,
   next: NextFunction
 ): Promise<void> {
-  const data = res.locals.body;
+  const data = res.locals.body; 
 
   try {
     const findClient = await readClientByEmail(data.email);

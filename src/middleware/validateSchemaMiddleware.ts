@@ -17,7 +17,7 @@ export default function validateSchema(schema: ObjectSchema) {
       return;
     }
 
-    res.locals.body = body; // boa prática armazenar req no res.locals.body
+    res.locals.body = body; // boa prática armazenar req no res.locals.body. Ele é um armazenamento local da req no back-end.
     next();
   };
 }
