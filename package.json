@@ -1,14 +1,19 @@
 {
   "name": "finance-system-back",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev src/app/index.ts",
+    "build": "tsc",
+    "start": "node dist/app/index.js",
+    "prisma": "prisma",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate"
   },
   "keywords": [],
-  "author": "",
+  "author": "Helena",
   "license": "ISC",
-  "description": "",
+  "description": "Backend do sistema de finanças",
   "dependencies": {
     "@prisma/client": "^5.21.0",
     "@types/node": "^22.7.6",
@@ -24,6 +29,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.3"
   }
 }

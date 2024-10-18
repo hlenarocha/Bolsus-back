@@ -8,15 +8,13 @@ interface Client {
 }
 
 export async function createClient({name, email, password}: Omit<Client, "id">) {
-  const client = await prisma.client.create({
+  await prisma.client.create({
     data: {
       name,
       email,
       password
     }
   });
-
-  return client;
 }
 
 export async function readClientByEmail(email: string) {

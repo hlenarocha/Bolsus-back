@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { hash } from "bcrypt";
-import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
 import { createClient, readClientByEmail } from '../model/clientModel';
 
@@ -22,8 +21,8 @@ export async function controlRegistration(
       return;
     }
 
-    const hashedPassword = await hash(data.password, bcryptSync);
-
+    const hashedPassword = await hash(data.password, bcryptSync); 
+      
     await createClient ({
       name: data.name,
       email: data.email,
