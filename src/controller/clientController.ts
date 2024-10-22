@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { hash } from "bcrypt";
 import dotenv from 'dotenv';
-import { createClient, readClientByEmail } from '../model/clientModel';
+import { createClient, readClientByEmail, readClientById } from '../model/clientModel';
 import bcrypt from "bcrypt";
 
 dotenv.config();
@@ -65,4 +65,26 @@ export async function controlClientLogin(
     res.status(500).send(error);
     return;
   }
+}
+
+export async function controlClientInformation(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const client = res.locals.body;
+
+  try {
+    const clientInformation = await readClientById(client.id);
+    
+    if (!clientInformation) {
+      res.status(404).send({ error: "Cliente não encontrado!"});
+      return;
+    }
+
+    res.status(200).send(clientInformation);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+
 }

@@ -34,5 +34,4 @@ export async function controlExpenseDelete(
   } catch (error) {
     res.status(400).send({ message: "Erro ao deletar receita!"});
   }
-
 }

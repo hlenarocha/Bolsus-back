@@ -19,4 +19,6 @@ clientRouter.post("/client/login", // geração de token a cada login
   controlClientLogin
 );
 
+clientRouter.get("/client/information")
+
 export default clientRouter;
