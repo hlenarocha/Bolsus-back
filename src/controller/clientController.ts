@@ -71,14 +71,19 @@ export async function controlClientInformation(
   req: Request,
   res: Response,
   next: NextFunction
-) {
-  const client = res.locals.body;
+): Promise<void> {
+  const client = res.locals.client;
+
+  if (isNaN(client.id) || client.id <= 0) {
+    res.status(400).send({ message: 'Invalid ID'});
+    return;
+  }
 
   try {
     const clientInformation = await readClientById(client.id);
     
     if (!clientInformation) {
-      res.status(404).send({ error: "Cliente não encontrado!"});
+      res.status(404).send({ error: "Client not found!"});
       return;
     }
 

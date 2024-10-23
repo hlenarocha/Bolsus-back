@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import validateSchema from '../middleware/validateSchemaMiddleware';
 import { loginClientSchema, registerClientSchema } from '../schema/clientSchema';
-import { controlClientLogin, controlClientRegistration } from '../controller/clientController';
-import { generateJWT } from '../middleware/token/jwtMiddleware';
+import { controlClientInformation, controlClientLogin, controlClientRegistration } from '../controller/clientController';
+import { generateJWT, verifyJWT } from '../middleware/token/jwtMiddleware';
 
 const clientRouter = Router();
 
@@ -19,6 +19,9 @@ clientRouter.post("/client/login", // geração de token a cada login
   controlClientLogin
 );
 
-clientRouter.get("/client/information")
+clientRouter.get("/client/information",
+  verifyJWT,
+  controlClientInformation
+);
 
 export default clientRouter;

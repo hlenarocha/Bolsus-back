@@ -31,7 +31,7 @@ export async function readClientByEmail(email: string) {
 export async function readClientById(id: number) {
   const client = await prisma.client.findUnique({
     where: { 
-      id 
+      id: id
     },
   })
 
