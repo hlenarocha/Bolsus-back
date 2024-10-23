@@ -27,13 +27,14 @@ export async function generateJWT(
       return;
     }
 
-    const token = jwt.sign(String(clientId.id), secretKey, { expiresIn: '168h' });
+    const token = jwt.sign({ id: clientId }, secretKey, { expiresIn: '168h' });
 
-    res.locals.cleitinho = token;
+    res.locals.token = token;
     next();
 
 
   } catch (err) {
+    console.log(err);
     res.status(500).send({ message: "Error generating JWT" });
     return;
   }
