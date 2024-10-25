@@ -7,15 +7,18 @@ export async function controlExpenseRegistration(
   next: NextFunction
 ) {
   const expense = res.locals.body;
+  const decoded = res.locals.client;
 
   try {
     await createExpense({
       categoryId: expense.categoryId,
-      clientId:  expense.clientId,
+      clientId:  decoded.id,
       title: expense.title,
-      date: expense.date,
+      date: new Date(expense.date),
       value: expense.value,
     });
+
+    res.status(200).send( { message: "Sucesso ao cadastrar despesa! "} );
 
   } catch (error) {
     res.status(400).send({ message: "Erro ao cadastrar despesa!" });
@@ -31,7 +34,11 @@ export async function controlExpenseDelete(
 
   try {
     await deleteExpense(expense.id);
+
+    res.status(200).send( { message: "Sucesso ao cadastrar despesa! "} );
+
   } catch (error) {
+    console.log(error);
     res.status(400).send({ message: "Erro ao deletar receita!"});
   }
 }
