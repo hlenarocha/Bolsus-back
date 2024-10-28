@@ -33,6 +33,10 @@ export async function readExpense(clientId: number) {
   const result = await prisma.expense.findMany({
       where: {
         clientId,
-      }})
+      },
+      include: {
+        category: true,
+      }
+    })
   return result;
 };

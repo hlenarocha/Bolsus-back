@@ -33,6 +33,10 @@ export async function readIncome(clientId: number) {
   const result = await prisma.income.findMany({
       where: {
         clientId,
-      }});
+      },
+      include: {
+        category: true,
+      }
+    });
   return result;
 };
