@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createExpense, deleteExpense } from "../model/expenseModel";
+import { createExpense, deleteExpense, readExpense } from "../model/expenseModel";
 
 export async function controlExpenseRegistration(
   req: Request,
@@ -39,6 +39,25 @@ export async function controlExpenseDelete(
 
   } catch (error) {
     console.log(error);
-    res.status(400).send({ message: "Erro ao deletar receita!"});
+    res.status(400).send({ message: "Erro ao deletar despesa!"});
   }
+}
+
+export async function controlExpenseRetrieve(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const decoded = res.locals.client;
+
+  try {
+    const result = await readExpense(decoded.id);
+
+    res.status(200).send(result);
+    
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ message: "Erro ao pegar informações das despesas! "})
+  }
+
 }

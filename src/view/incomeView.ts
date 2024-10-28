@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validateSchema from "../middleware/validateSchemaMiddleware";
 import { registerIncomeSchema } from "../schema/incomeSchema";
-import { controlIncomeDelete, controlIncomeRegistration } from "../controller/incomeController";
+import { controlIncomeDelete, controlIncomeRegistration, controlIncomeRetrieve } from "../controller/incomeController";
 import { verifyJWT } from "../middleware/token/jwtMiddleware";
 
 
@@ -17,5 +17,10 @@ incomeRouter.delete("/income/delete",
   verifyJWT,
   controlIncomeDelete
 );
+
+incomeRouter.get("/income/data",
+  verifyJWT,
+  controlIncomeRetrieve
+); 
 
 export default incomeRouter;

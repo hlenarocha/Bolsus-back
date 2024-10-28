@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createIncome, deleteIncome } from "../model/incomeModel";
+import { createIncome, deleteIncome, readIncome } from "../model/incomeModel";
 
 export async function controlIncomeRegistration(
   req: Request,
@@ -41,6 +41,25 @@ export async function controlIncomeDelete(
 
   } catch (error) {
     res.status(400).send({ message: "Erro ao deletar receita!"});
+  }
+
+}
+
+export async function controlIncomeRetrieve(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const decoded = res.locals.client;
+
+  try {
+    const result = await readIncome(decoded.id);
+
+    res.status(200).send(result);
+    
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ message: "Erro ao pegar informações das entradas! "})
   }
 
 }

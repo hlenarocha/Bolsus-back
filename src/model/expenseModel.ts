@@ -28,3 +28,11 @@ export async function deleteExpense(id: number) {
     }
   });
 }
+
+export async function readExpense(clientId: number) {
+  const result = await prisma.expense.findMany({
+      where: {
+        clientId,
+      }})
+  return result;
+};

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { controlExpenseDelete, controlExpenseRegistration } from "../controller/expenseController";
+import { controlExpenseDelete, controlExpenseRegistration, controlExpenseRetrieve } from "../controller/expenseController";
 import { verifyJWT } from "../middleware/token/jwtMiddleware";
 import validateSchema from "../middleware/validateSchemaMiddleware";
 import { registerExpenseSchema } from "../schema/expenseSchema";
@@ -15,6 +15,11 @@ expenseRouter.post("/expense/register",
 expenseRouter.delete("/expense/delete",
   verifyJWT,
   controlExpenseDelete
+)
+
+expenseRouter.get("/expense/data", 
+  verifyJWT,
+  controlExpenseRetrieve
 )
 
 export default expenseRouter;

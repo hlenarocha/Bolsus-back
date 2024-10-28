@@ -28,3 +28,11 @@ export async function deleteIncome(id: number) {
     }
   });
 }
+
+export async function readIncome(clientId: number) {
+  const result = await prisma.income.findMany({
+      where: {
+        clientId,
+      }});
+  return result;
+};
