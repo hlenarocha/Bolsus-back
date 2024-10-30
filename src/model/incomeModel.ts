@@ -21,10 +21,11 @@ export async function createIncome({ categoryId, clientId, title, date, value }:
   });
 }
 
-export async function deleteIncome(id: number) {
+export async function deleteIncome(id: number, clientId: number) {
   await prisma.income.delete({
     where: {
       id,
+      clientId
     }
   });
 }

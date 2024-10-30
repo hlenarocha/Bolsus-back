@@ -13,7 +13,7 @@ incomeRouter.post("/income/register",
   controlIncomeRegistration
 );
 
-incomeRouter.delete("/income/delete",
+incomeRouter.delete("/income/delete/:id",
   verifyJWT,
   controlIncomeDelete
 );

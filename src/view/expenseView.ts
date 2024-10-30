@@ -12,7 +12,7 @@ expenseRouter.post("/expense/register",
   controlExpenseRegistration
 )
 
-expenseRouter.delete("/expense/delete",
+expenseRouter.delete("/expense/delete/:id",
   verifyJWT,
   controlExpenseDelete
 )

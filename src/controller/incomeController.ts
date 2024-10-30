@@ -32,17 +32,19 @@ export async function controlIncomeDelete(
   res: Response,
   next: NextFunction
 ) {
-  const income = res.locals.body;
+  const { id } = req.params;
+
+  const decoded = res.locals.client;
 
   try {
-    await deleteIncome(income.id);
+    await deleteIncome(Number(id), decoded.id);
 
-    res.status(200).send({ message: "Sucesso ao deletar receita!" });
+    res.status(200).send( { message: "Sucesso ao deletar entrada! "} );
 
   } catch (error) {
-    res.status(400).send({ message: "Erro ao deletar receita!"});
+    console.log(error);
+    res.status(400).send({ message: "Erro ao deletar entrada!"});
   }
-
 }
 
 export async function controlIncomeRetrieve(
@@ -61,5 +63,4 @@ export async function controlIncomeRetrieve(
     console.log(err);
     res.status(400).send({ message: "Erro ao pegar informações das entradas! "})
   }
-
 }

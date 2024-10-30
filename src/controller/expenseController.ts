@@ -30,12 +30,14 @@ export async function controlExpenseDelete(
   res: Response,
   next: NextFunction
 ) {
-  const expense = res.locals.body;
+  const { id } = req.params;
+
+  const decoded = res.locals.client;
 
   try {
-    await deleteExpense(expense.id);
+    await deleteExpense(Number(id), decoded.id);
 
-    res.status(200).send( { message: "Sucesso ao cadastrar despesa! "} );
+    res.status(200).send( { message: "Sucesso ao deletar despesa! "} );
 
   } catch (error) {
     console.log(error);
