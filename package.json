@@ -4,7 +4,7 @@
   "main": "src/app/index.ts",
   "scripts": {
     "dev": "ts-node-dev src/app/index.ts",
-    "build": "npm install && npx tsc && npm run migrate",
+    "build": "npm install && npx tsc && npm run migrate && npm run seed",
     "start": "node dist/app/index.js",
     "prisma": "prisma",
     "migrate": "prisma migrate dev",
