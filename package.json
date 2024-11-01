@@ -7,7 +7,7 @@
     "build": "npm install && npx tsc && npm run migrate && npm run seed",
     "start": "node dist/app/index.js",
     "prisma": "prisma",
-    "migrate": "prisma migrate dev --force",
+    "migrate": "prisma migrate dev",
     "generate": "prisma generate",
     "seed": "npx prisma migrate reset --force && ts-node src/scripts/seed.ts"
   },
